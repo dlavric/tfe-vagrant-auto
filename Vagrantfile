@@ -12,7 +12,9 @@ Vagrant.configure("2") do |config|
             v.cpus = 2  
     end
 
+    tfe.vm.provision "shell", path: "scripts/config_replicated.sh"
     tfe.vm.provision "shell", path: "scripts/install_tfe.sh"
+    
     
     end  
 

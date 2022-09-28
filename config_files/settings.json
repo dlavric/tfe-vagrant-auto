@@ -1,0 +1,11 @@
+{
+    "hostname": {
+        "value": "192.168.56.51.nip.io"
+    },
+    "disk_path": {
+        "value": "/mnt/tfe"
+    },
+    "enc_password": {
+        "value": "CHANGEME"
+    }
+}

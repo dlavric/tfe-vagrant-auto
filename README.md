@@ -1,6 +1,6 @@
 # tfe-vagrant
 
-This repository is creating a VM with Vagrant to install TFE manually with Self-Signed Certificate
+This repository is creating a VM with Vagrant to install TFE standalone online mode automatically with a Self-Signed Certificate.
 
 ### Prerequisites
 
@@ -13,85 +13,53 @@ This repository is creating a VM with Vagrant to install TFE manually with Self-
 
 - Clone this repository:
 ```shell
-git clone git@github.com:dlavric/tfe-vagrant.git
+git clone git@github.com:dlavric/tfe-vagrant-auto.git
 ```
 
 - Go to the directory where the repo is stored:
 ```shell
-cd tfe-vagrant
+cd tfe-vagrant-auto
 ```
+
+## NOTE: To install a specific version of TFE, modify the **replicated.conf** file [here](https://github.com/dlavric/tfe-vagrant-auto/blob/main/config_files/replicated.conf#L8) with the Release Sequence you want from the [official releases website](https://www.terraform.io/enterprise/releases#terraform-enterprise-releases) 
+
+- Download your Replicated license file and make sure to copy it at [this path](https://github.com/dlavric/tfe-vagrant-auto/tree/main/config_files) under the name `license.rli` 
 
 - Start Vagrant
 ```shell
 vagrant up
 ```
 
-- Connect to the VM
+- Check the installation and when you see the following message prompted on your terminal, go to http://192.168.56.51:8800 in your browser
 ```shell
-vagrant ssh tfe
-```
-
-- Install TFE (for specific version follow this [KB](https://support.hashicorp.com/hc/en-us/articles/1500009010521-How-to-Install-Terraform-Enterprise-to-a-Specific-Version))
-```shell
-sudo curl -o /tmp/install.sh https://install.terraform.io/ptfe/stable
-
-sudo chmod +x /tmp/install.sh
-
-sudo /tmp/install.sh
-```
-
-- Follow the installation script prompts. Example output is below
-```shell
-Determining local address
-The installer was unable to automatically detect the private IP address of this machine.
-Please choose one of the following network interfaces:
-[0] eth0        10.0.2.15
-[1] eth1        192.168.56.51
-Enter desired number (0-1): 0
-The installer will use network interface 'eth0' (with IP address '10.0.2.15').
-Determining service address
-The installer was unable to automatically detect the service IP address of this machine.
-Please enter the address or leave blank for unspecified.
-Service IP address: 192.168.56.51
-Does this machine require a proxy to access the Internet? (y/N) N
-Installing docker version 20.10.7 from https://get.replicated.com/docker-install.sh
-
-
 To continue the installation, visit the following URL in your browser:
-
-  http://192.168.56.51:8800
+    tfe: 
+    tfe:   http://192.168.56.51:8800
 ```
 
-- Configure TFE by following the steps from [here](https://hashicorp.atlassian.net/wiki/spaces/tfsupport/pages/676792039/Terraform+Enterprise+Installation#Replicated-console-access) 
-```
-Hostname: 192.168.56.51.nip.io
+- The connection is not going to be secure and you should click on **Advanced** > **Proceed to 192.168.56.51 (unsafe)**
+![Advanced](https://github.com/dlavric/tfe-vagrant-auto/blob/main/pictures/Screenshot3.png)
+![Unsafe](https://github.com/dlavric/tfe-vagrant-auto/blob/main/pictures/Screenshot4.png)
 
-Choose `Self-Signed certificate` when asked to provide the custom SSL certificate on the screen.
+- Wait for the **Initializing Components** and afterwards you should see the screen with **Unlock the Console** message
+![Unlock](https://github.com/dlavric/tfe-vagrant-auto/blob/main/pictures/Screenshot5.png)
 
-Mounted Disk Path (Required) set to /mnt/tfe
-```
+- Check the desired TFE version has been installed 
+![TFE](https://github.com/dlavric/tfe-vagrant-auto/blob/main/pictures/Screenshot6.png)
 
-- TFE is installed successfully
+- You can create your own user to complete the installation and access the TFE Workspaces
 
-![TFE Dashboard](https://github.com/dlavric/tfe-vagrant/blob/main/pictures/Screenshot1.png)
-
-- Uninstall TFE
+- When you are done you can destroy the VM
 ```shell
-curl https://install.terraform.io/tfe/uninstall > uninstall.sh
-
-chmod +x uninstall.sh
-
-sudo bash uninstall.sh
-
-This script will completely uninstall Terraform Enterprise and Replicated on this system, as well as remove associated files.
-Do you wish to continue? (y/n)yes
-Proceeding with uninstall...
-Stopping and disabling the replicated services...
-....
-....
-Uninstall Complete
-
-If you ran into any unexpected errors, please contact support@hashicorp.com
-or visit the following url:
-https://support.hashicorp.com/hc/en-us/articles/360043134793-Uninstalling-Terraform-Enterprise
+vagrant destroy
 ```
+
+## TO DO ##
+
+- [ ] Create the TFE admin user automatically
+
+## Reference Documentation
+
+- [Automated TFE Installation](https://www.terraform.io/enterprise/install/automated/automating-the-installer#automated-terraform-enterprise-installation)
+- [TFE Releases 2022](https://www.terraform.io/enterprise/releases#terraform-enterprise-releases)
+- [TFE Automation for Initial User creation](https://www.terraform.io/enterprise/install/automated/automating-initial-user)

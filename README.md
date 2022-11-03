@@ -23,7 +23,10 @@ cd tfe-vagrant-auto
 
 ### NOTE: To install a specific version of TFE, modify the `replicated.conf` file [here](https://github.com/dlavric/tfe-vagrant-auto/blob/main/config_files/replicated.conf#L8) with the Release Sequence you want from the [official releases website](https://www.terraform.io/enterprise/releases#terraform-enterprise-releases) 
 
-- Download your Replicated license file and make sure to copy it at [this path](https://github.com/dlavric/tfe-vagrant-auto/tree/main/config_files) under the name `license.rli` 
+- Download your Replicated license file and make sure to copy it to `config_files/license.rli`
+```
+cp <path>/license.rli config_files/license.rli
+```
 
 - Start Vagrant
 ```shell

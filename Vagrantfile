@@ -10,19 +10,11 @@ Vagrant.configure("2") do |config|
         tfe.vm.provider "virtualbox" do |v|     
             v.memory = 1024 * 4
             v.cpus = 2  
-    end
+        end
 
-    tfe.vm.provision "shell", path: "scripts/config_replicated.sh"
-    tfe.vm.provision "shell", path: "scripts/install_tfe.sh"
-    
+        tfe.vm.provision "shell", path: "scripts/config_replicated.sh"
+        tfe.vm.provision "shell", path: "scripts/install_tfe.sh"
     
     end  
-
-
-# Install Azure CLI and setup azure env variables
-
-   # config.vm.provision "file", source: "scripts/azurerm.sh", destination: "/home/vagrant/azurerm.sh"
-   # config.vm.provision "shell", inline: "cat /home/vagrant/azurerm.sh >> /home/vagrant/.bashrc"
-   # config.vm.provision "shell", path: "scripts/install_azurecli.sh"
-    
+ 
 end
